@@ -1,0 +1,62 @@
+body {
+    background: url(/static/bg.jpg) no-repeat center center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+    color: rgb(255, 255, 255);
+}
+
+#logo {
+    margin: 50px 10%;
+    font-size: 75px;
+    letter-spacing: 5px;
+    color: rgba(255,255,255,0.5);
+}
+
+#logo p {
+    font-size: 10px;
+    letter-spacing: 10px;
+    padding: 0;
+    margin-left: 7px;
+}
+
+#welcome {
+    font-size: 12px;
+    margin: 50px 10%;
+    padding-left: 7px;
+}
+
+#apps {
+    margin: 50px 10%;
+    padding-left: 7px;
+}
+
+.app {
+    display: inline-block;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 48px;
+    width: 50px;
+    margin: 5px;
+}
+
+.app:hover {
+    color: rgb(255,255,255);
+}
+
+#time {
+    margin: 125px 10% 25px 10%;
+    padding-left: 7px;
+    font-size: 72px;
+    text-align: right;
+    color: rgba(255,255,255,0.25);
+}
+
+#time-date {
+    font-size: 18px;
+    letter-spacing: 10px;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
