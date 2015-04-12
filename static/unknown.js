@@ -1,0 +1,1 @@
+console.log('If this is shown, unknown.js is loaded successfully');

@@ -1,9 +1,8 @@
 <?php
-namespace Services\User;
+namespace Services;
 
 use Quark\IQuarkAuthorizableService;
 use Quark\IQuarkGetService;
-use Quark\IQuarkSignedGetService;
 
 use Quark\Quark;
 use Quark\QuarkDTO;
@@ -12,14 +11,15 @@ use Quark\QuarkView;
 
 use ViewModels\LayoutView;
 use ViewModels\CommonErrorView;
-use ViewModels\User\LoginView;
+
+use Quark\Extensions\Facebook\Facebook;
 
 /**
- * Class LogoutService
+ * Class FacebookService
  *
- * @package Services\User
+ * @package Services
  */
-class LogoutService implements IQuarkGetService, IQuarkAuthorizableService, IQuarkSignedGetService {
+class FacebookService implements IQuarkGetService, IQuarkAuthorizableService {
 	/**
 	 * @param QuarkDTO $request
 	 *
@@ -50,24 +50,28 @@ class LogoutService implements IQuarkGetService, IQuarkAuthorizableService, IQua
 	}
 
 	/**
-	 * @param QuarkDTO     $request
-	 * @param QuarkSession $session
-	 *
-	 * @return mixed
-	 */
-	public function Get (QuarkDTO $request, QuarkSession $session) {
-		if (!$session->Logout())
-			return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
-
-		Quark::Redirect('/');
-	}
-
-	/**
 	 * @param QuarkDTO $request
 	 *
 	 * @return mixed
 	 */
 	public function SignatureCheckFailedOnGet (QuarkDTO $request) {
 		return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
+	}
+
+	/**
+	 * @param QuarkDTO     $request
+	 * @param QuarkSession $session
+	 *
+	 * @return mixed
+	 */
+	public function Get (QuarkDTO $request, QuarkSession $session) {
+		$facebook = Facebook::SessionFromRedirect(THINK_FACEBOOK, Quark::WebHost() . 'facebook');
+
+		$session->User()->facebook = $facebook->Session();
+
+		if ($session->User()->Save())
+			Quark::Redirect('/');
+
+		echo 'error while saving user';
 	}
 }

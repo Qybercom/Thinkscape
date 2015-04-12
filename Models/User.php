@@ -1,6 +1,7 @@
 <?php
 namespace Models;
 
+use Quark\Extensions\Facebook\FacebookAccessToken;
 use Quark\IQuarkModel;
 use Quark\IQuarkModelWithBeforeCreate;
 use Quark\IQuarkStrongModel;
@@ -40,7 +41,8 @@ class User implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 			'nickname' => '',
 			'avatar' => new QuarkFile(Quark::Host() . '/storage/default.png'),
 			'favourites' => new QuarkCollection(new Head()),
-			'heads' => new QuarkCollection(new HeadAccess())
+			'heads' => new QuarkCollection(new HeadAccess()),
+			'facebook' => new FacebookAccessToken()
 		);
 	}
 

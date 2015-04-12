@@ -28,9 +28,11 @@ use ViewModels\Post\CreateView;
  */
 class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthorizableService, IQuarkSignedPostService {
 	/**
+	 * @param QuarkDTO $request
+	 *
 	 * @return string
 	 */
-	public function AuthorizationProvider () {
+	public function AuthorizationProvider (QuarkDTO $request) {
 		return THINK_SESSION;
 	}
 
@@ -38,16 +40,19 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 	 * @param QuarkDTO     $request
 	 * @param QuarkSession $session
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
 	public function AuthorizationCriteria (QuarkDTO $request, QuarkSession $session) {
 		return $session->User() != null;
 	}
 
 	/**
+	 * @param QuarkDTO $request
+	 * @param          $criteria
+	 *
 	 * @return mixed
 	 */
-	public function AuthorizationFailed () {
+	public function AuthorizationFailed (QuarkDTO $request, $criteria) {
 		return QuarkView::InLayout(new AuthErrorView(), new LayoutView());
 	}
 
@@ -100,9 +105,11 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 	}
 
 	/**
+	 * @param QuarkDTO $request
+	 *
 	 * @return mixed
 	 */
-	public function SignatureCheckFailedOnPost () {
+	public function SignatureCheckFailedOnPost (QuarkDTO $request) {
 		return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
 	}
 }

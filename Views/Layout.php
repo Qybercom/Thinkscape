@@ -56,7 +56,8 @@
 		echo '
 			<style>
 			#quark-thinkscape-poster {
-				background: url(' . $post->poster . ');
+				background: url(' . $post->poster . ') center center;
+				background-size: cover;
 			}
 			</style>
 			<img class="avatar" src="', $post->author->avatar, '" alt="avatar" />
@@ -75,7 +76,8 @@
 		echo '
 			<style>
 			#quark-thinkscape-poster {
-				background: url(' . $head->poster . ');
+				background: url(' . $head->poster . ') center center;
+				background-size: cover;
 			}
 			</style>
 			<div class="title">

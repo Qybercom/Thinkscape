@@ -19,7 +19,7 @@ use ViewModels\User\LoginView;
  *
  * @package Services\User
  */
-class LoginService implements IQuarkGetService, IQuarkPostService, IQuarkSignedPostService {
+class LoginService implements IQuarkGetService, IQuarkPostService {
 	/**
 	 * @param QuarkDTO     $request
 	 * @param QuarkSession $session
@@ -41,12 +41,5 @@ class LoginService implements IQuarkGetService, IQuarkPostService, IQuarkSignedP
 			return QuarkView::InLayout(new LoginView(), new LayoutView());
 
 		Quark::Redirect('/');
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function SignatureCheckFailedOnPost () {
-		return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
 	}
 }

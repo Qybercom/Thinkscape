@@ -1,6 +1,7 @@
 <?php
 namespace Services\User;
 
+use Quark\IQuarkAuthorizableService;
 use Quark\IQuarkGetService;
 use Quark\IQuarkPostService;
 use Quark\IQuarkSignedPostService;
@@ -22,7 +23,36 @@ use ViewModels\CommonErrorView;
  *
  * @package Services\User
  */
-class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkSignedPostService {
+class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthorizableService, IQuarkSignedPostService {
+	/**
+	 * @param QuarkDTO $request
+	 *
+	 * @return string
+	 */
+	public function AuthorizationProvider (QuarkDTO $request) {
+		return THINK_SESSION;
+	}
+
+	/**
+	 * @param QuarkDTO     $request
+	 * @param QuarkSession $session
+	 *
+	 * @return bool|mixed
+	 */
+	public function AuthorizationCriteria (QuarkDTO $request, QuarkSession $session) {
+		return true;
+	}
+
+	/**
+	 * @param QuarkDTO $request
+	 * @param          $criteria
+	 *
+	 * @return mixed
+	 */
+	public function AuthorizationFailed (QuarkDTO $request, $criteria) {
+		// TODO: Implement AuthorizationFailed() method.
+	}
+
 	/**
 	 * @param QuarkDTO     $request
 	 * @param QuarkSession $session
@@ -52,9 +82,11 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkSigned
 	}
 
 	/**
+	 * @param QuarkDTO $request
+	 *
 	 * @return mixed
 	 */
-	public function SignatureCheckFailedOnPost () {
+	public function SignatureCheckFailedOnPost (QuarkDTO $request) {
 		return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
 	}
 }

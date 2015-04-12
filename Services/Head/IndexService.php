@@ -23,9 +23,11 @@ use ViewModels\LayoutView;
  */
 class IndexService implements IQuarkGetService, IQuarkAuthorizableLiteService {
 	/**
+	 * @param QuarkDTO $request
+	 *
 	 * @return string
 	 */
-	public function AuthorizationProvider () {
+	public function AuthorizationProvider (QuarkDTO $request) {
 		return THINK_SESSION;
 	}
 
