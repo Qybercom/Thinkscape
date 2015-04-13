@@ -1,7 +1,6 @@
 <?php
 namespace Models;
 
-use Quark\Extensions\Facebook\FacebookAccessToken;
 use Quark\IQuarkModel;
 use Quark\IQuarkModelWithBeforeCreate;
 use Quark\IQuarkStrongModel;
@@ -16,6 +15,8 @@ use Quark\QuarkFile;
 use Quark\QuarkModel;
 
 use Quark\DataProviders\MongoDB;
+
+use Quark\Extensions\SocialNetwork\SocialNetwork;
 
 /**
  * Class User
@@ -42,7 +43,8 @@ class User implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 			'avatar' => new QuarkFile(Quark::Host() . '/storage/default.png'),
 			'favourites' => new QuarkCollection(new Head()),
 			'heads' => new QuarkCollection(new HeadAccess()),
-			'facebook' => new FacebookAccessToken()
+			'facebook' => new SocialNetwork(THINK_FACEBOOK),
+			'vkontakte' => new SocialNetwork(THINK_VKONTAKTE)
 		);
 	}
 

@@ -8,7 +8,7 @@ use Quark\IQuarkViewModel;
  *
  * @package ViewModels
  */
-class CommonErrorView implements IQuarkViewModel {
+class CommonErrorView implements IQuarkViewModel, IThinkscapeThinHeaderView {
 	/**
 	 * @return string
 	 */

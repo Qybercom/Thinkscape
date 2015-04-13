@@ -7,7 +7,7 @@ use Quark\IQuarkViewModelWithResources;
 
 use Quark\Quark;
 
-use Quark\Extensions\Facebook\FacebookSharedResource;
+use Quark\Extensions\SocialNetwork\OpenGraphResource;
 
 /**
  * Class IndexView
@@ -34,7 +34,12 @@ class IndexView implements IQuarkViewModel, IQuarkAuthorizableViewModel, IQuarkV
 	 */
 	public function Resources () {
 		return array(
-			FacebookSharedResource::Article(Quark::WebHost() . '/post/' . $this->post->_id, $this->post->title, $this->post->poster->WebLocation())
+			OpenGraphResource::Article(
+				Quark::WebHost() . '/post/' . $this->post->_id,
+				$this->post->title,
+				$this->post->poster->WebLocation()
+			)->Property(OpenGraphResource::PROPERTY_ARTICLE_AUTHOR, $this->post->author->nickname)
+			->App(THINK_FACEBOOK)
 		);
 	}
 }

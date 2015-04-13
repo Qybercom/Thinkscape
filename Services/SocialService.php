@@ -12,14 +12,14 @@ use Quark\QuarkView;
 use ViewModels\LayoutView;
 use ViewModels\CommonErrorView;
 
-use Quark\Extensions\Facebook\Facebook;
+use Quark\Extensions\SocialNetwork\SocialNetwork;
 
 /**
- * Class FacebookService
+ * Class SocialService
  *
  * @package Services
  */
-class FacebookService implements IQuarkGetService, IQuarkAuthorizableService {
+class SocialService implements IQuarkGetService, IQuarkAuthorizableService {
 	/**
 	 * @param QuarkDTO $request
 	 *
@@ -65,11 +65,13 @@ class FacebookService implements IQuarkGetService, IQuarkAuthorizableService {
 	 * @return mixed
 	 */
 	public function Get (QuarkDTO $request, QuarkSession $session) {
-		$facebook = Facebook::SessionFromRedirect(THINK_FACEBOOK, Quark::WebHost() . 'facebook');
+		$user = $session->User();
 
-		$session->User()->facebook = $facebook->Session();
+		$social = new SocialNetwork(THINK_VKONTAKTE);
 
-		if ($session->User()->Save())
+		$user->vkontakte = $social->SessionFromRedirect(Quark::URLOf('/social'));
+
+		if ($user->Save())
 			Quark::Redirect('/');
 
 		echo 'error while saving user';
