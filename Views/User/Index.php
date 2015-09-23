@@ -49,5 +49,5 @@ if ($this->User() != null && $user->_id == $this->User()->_id)
 		Here are a few options that available only for account owner<br>
 		<br>
 		<a class="quark-button block green" href="/user/update/', $user->_id, '">Update profile</a>
-		<a class="quark-button block" href="/user/logout/?_signature=', $this->Signature(false), '">Logout</a>
+		<a class="quark-button block" href="/user/logout/?_s=', $this->Signature(false), '">Logout</a>
 	';

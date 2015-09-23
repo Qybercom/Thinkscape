@@ -1,7 +1,6 @@
 <?php
 namespace ViewModels\Head;
 
-use Quark\IQuarkAuthorizableViewModel;
 use Quark\IQuarkViewModel;
 
 /**
@@ -9,18 +8,11 @@ use Quark\IQuarkViewModel;
  *
  * @package ViewModels\Head
  */
-class IndexView implements IQuarkViewModel, IQuarkAuthorizableViewModel {
+class IndexView implements IQuarkViewModel {
 	/**
 	 * @return string
 	 */
 	public function View () {
 		return 'Head/Index';
-	}
-
-	/**
-	 * @return string
-	 */
-	public function AuthProvider () {
-		return THINK_SESSION;
 	}
 }

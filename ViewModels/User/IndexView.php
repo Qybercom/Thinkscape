@@ -1,7 +1,6 @@
 <?php
 namespace ViewModels\User;
 
-use Quark\IQuarkAuthorizableViewModel;
 use Quark\IQuarkViewModel;
 
 use ViewModels\IThinkscapeThinHeaderView;
@@ -11,18 +10,11 @@ use ViewModels\IThinkscapeThinHeaderView;
  *
  * @package ViewModels\User
  */
-class IndexView implements IQuarkViewModel, IQuarkAuthorizableViewModel, IThinkscapeThinHeaderView {
+class IndexView implements IQuarkViewModel, IThinkscapeThinHeaderView {
 	/**
 	 * @return string
 	 */
 	public function View () {
 		return 'User/Index';
-	}
-
-	/**
-	 * @return string
-	 */
-	public function AuthProvider () {
-		return THINK_SESSION;
 	}
 }

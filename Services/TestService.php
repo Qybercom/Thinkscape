@@ -5,19 +5,21 @@ use Quark\Extensions\SocialNetwork\SocialNetwork;
 use Quark\IQuarkGetService;
 use Quark\IQuarkAuthorizableLiteService;
 
+use Quark\IQuarkPostService;
 use Quark\Quark;
 use Quark\QuarkDTO;
 use Quark\QuarkSession;
 
 use Quark\Extensions\SocialNetwork\Providers\Facebook;
 use Quark\Extensions\SocialNetwork\Providers\VKontakte;
+use ViewModels\TestView;
 
 /**
  * Class TestService
  *
  * @package Services
  */
-class TestService implements IQuarkGetService, IQuarkAuthorizableLiteService {
+class TestService implements IQuarkGetService, IQuarkPostService, IQuarkAuthorizableLiteService {
 	/**
 	 * @param QuarkDTO $request
 	 *
@@ -34,7 +36,7 @@ class TestService implements IQuarkGetService, IQuarkAuthorizableLiteService {
 	 * @return bool|mixed
 	 */
 	public function AuthorizationCriteria (QuarkDTO $request, QuarkSession $session) {
-		return $session->User() != null;
+		return true;//$session->User() != null;
 	}
 
 	/**
@@ -48,16 +50,39 @@ class TestService implements IQuarkGetService, IQuarkAuthorizableLiteService {
 	}
 
 	/**
+	 * @param QuarkDTO $request
+	 */
+	private function _r (QuarkDTO $request) {
+		//print_r($request);
+
+		$out = $request->SerializeRequest();
+
+		var_dump($out);
+
+		$req = new QuarkDTO();
+		$req->UnserializeRequest($out);
+
+		print_r($req);
+	}
+
+	/**
 	 * @param QuarkDTO     $request
 	 * @param QuarkSession $session
 	 *
 	 * @return mixed
 	 */
 	public function Get (QuarkDTO $request, QuarkSession $session) {
-		/*$vk = new SocialNetwork(THINK_VKONTAKTE);
+		//$this->_r($request);
+		return new TestView();
+	}
 
-		Quark::Redirect($vk->LoginURL(Quark::URLOf('/social')));*/
-		print_r($session->User()->facebook->Profile(Facebook::CURRENT_USER));
-		print_r($session->User()->vkontakte->Profile(VKontakte::CURRENT_USER));
+	/**
+	 * @param QuarkDTO     $request
+	 * @param QuarkSession $session
+	 *
+	 * @return mixed
+	 */
+	public function Post (QuarkDTO $request, QuarkSession $session) {
+		$this->_r($request);
 	}
 }

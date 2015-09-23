@@ -57,4 +57,34 @@ class DigestUser implements IQuarkModel, IQuarkAuthorizableModel, IQuarkModelWit
 	public function DataProvider () {
 		return THINK_DATA;
 	}
+
+	/**
+	 * @param string $name
+	 * @param $session
+	 *
+	 * @return mixed
+	 */
+	public function Session ($name, $session) {
+		// TODO: Implement Session() method.
+	}
+
+	/**
+	 * @param string $name
+	 * @param $criteria
+	 * @param int $lifetime (seconds)
+	 *
+	 * @return QuarkModel
+	 */
+	public function Login ($name, $criteria, $lifetime) {
+		// TODO: Implement Login() method.
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function Logout ($name) {
+		// TODO: Implement Logout() method.
+	}
 }

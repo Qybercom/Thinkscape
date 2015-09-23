@@ -7,7 +7,6 @@ use Quark\IQuarkStrongModel;
 use Quark\IQuarkModelWithDataProvider;
 use Quark\IQuarkLinkedModel;
 use Quark\IQuarkAuthorizableModel;
-use Quark\IQuarkAuthorizationProvider;
 
 use Quark\Quark;
 use Quark\QuarkCollection;
@@ -20,6 +19,9 @@ use Quark\Extensions\SocialNetwork\SocialNetwork;
 
 /**
  * Class User
+ *
+ * @property string $email
+ * @property string $password
  *
  * @package Models
  */
@@ -63,34 +65,12 @@ class User implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 	}
 
 	/**
-	 * @param $criteria
-	 *
-	 * @return mixed
-	 */
-	public function Authorize ($criteria) {
-		return QuarkModel::FindOne($this, array(
-			'email' => $criteria->email,
-			'password' => self::Password($criteria->email, $criteria->password)
-		));
-	}
-
-	/**
-	 * @param IQuarkAuthorizationProvider $provider
-	 * @param                             $request
-	 *
-	 * @return mixed
-	 */
-	public function RenewSession (IQuarkAuthorizationProvider $provider, $request) {
-		return isset($request->_id) ? QuarkModel::FindOneById($this, $request->_id) : null;
-	}
-
-	/**
 	 * @param $raw
 	 *
 	 * @return mixed
 	 */
 	public function Link ($raw) {
-		return QuarkModel::FindOneById($this, $raw);
+		return QuarkModel::FindOneById(new User(), $raw);
 	}
 
 	/**
@@ -117,5 +97,38 @@ class User implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 	 */
 	public function BeforeCreate ($options) {
 		$this->password = self::Password($this->email, $this->password);
+	}
+
+	/**
+	 * @param string $name
+	 * @param        $session
+	 *
+	 * @return mixed
+	 */
+	public function Session ($name, $session) {
+		return QuarkModel::FindOneById(new User(), $session->_id);
+	}
+
+	/**
+	 * @param string $name
+	 * @param        $criteria
+	 * @param int    $lifetime (seconds)
+	 *
+	 * @return QuarkModel
+	 */
+	public function Login ($name, $criteria, $lifetime) {
+		return QuarkModel::FindOne(new User(), array(
+			'email' => $criteria->email,
+			'password' => self::Password($criteria->email, $criteria->password)
+		));
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function Logout ($name) {
+		// TODO: Implement Logout() method.
 	}
 }

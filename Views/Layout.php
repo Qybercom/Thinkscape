@@ -5,8 +5,8 @@
 
 	<?php
 	echo $this->Resources();
-
 	$user = $this->User();
+
 	$single = $this->_child instanceof \ViewModels\IThinkscapeSingleView;
 	$thin = $this->_child instanceof \ViewModels\IThinkscapeThinHeaderView;
 	?>

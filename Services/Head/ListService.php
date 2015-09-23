@@ -4,6 +4,7 @@ namespace Services\Head;
 use Quark\IQuarkAuthorizableLiteService;
 use Quark\IQuarkGetService;
 
+use Quark\Quark;
 use Quark\QuarkDTO;
 use Quark\QuarkModel;
 use Quark\QuarkSession;

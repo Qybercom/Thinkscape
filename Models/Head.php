@@ -51,7 +51,7 @@ class Head implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 	 * @return mixed
 	 */
 	public function Link ($raw) {
-		return QuarkModel::FindOneById($this, $raw);
+		return QuarkModel::FindOneById(new Head(), $raw);
 	}
 
 	/**

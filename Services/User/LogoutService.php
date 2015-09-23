@@ -59,7 +59,7 @@ class LogoutService implements IQuarkGetService, IQuarkAuthorizableService, IQua
 		if (!$session->Logout())
 			return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
 
-		Quark::Redirect('/');
+		return QuarkDTO::ForRedirect('/');
 	}
 
 	/**

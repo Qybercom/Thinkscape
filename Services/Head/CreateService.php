@@ -76,7 +76,7 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 		if (!$head->Create())
 			return QuarkView::InLayout(new CreateView(), new LayoutView(), $head);
 
-		Quark::Redirect('/');
+		return QuarkDTO::ForRedirect('/');
 	}
 
 	/**

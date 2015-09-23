@@ -58,10 +58,11 @@ class Post implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 
 	/**
 	 * @param $raw
+	 * @param array $options
 	 *
 	 * @return mixed
 	 */
-	public function AfterFind ($raw) {
+	public function AfterFind ($raw, $options) {
 		$this->content = WysiBB::ToHTML(htmlspecialchars($this->content));
 	}
 

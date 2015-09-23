@@ -2,7 +2,6 @@
 namespace ViewModels;
 
 use Quark\IQuarkViewModel;
-use Quark\IQuarkAuthorizableViewModel;
 use Quark\IQuarkViewModelWithResources;
 
 use Quark\QuarkJSViewResourceType;
@@ -20,7 +19,7 @@ use Quark\ViewResources\WysiBB\WysiBB;
  *
  * @package ViewModels
  */
-class LayoutView implements IQuarkViewModel, IQuarkAuthorizableViewModel, IQuarkViewModelWithResources {
+class LayoutView implements IQuarkViewModel, IQuarkViewModelWithResources {
 	public $heads = array();
 	public $posts = array();
 
@@ -48,13 +47,6 @@ class LayoutView implements IQuarkViewModel, IQuarkAuthorizableViewModel, IQuark
 	 */
 	public function View () {
 		return 'Layout';
-	}
-
-	/**
-	 * @return string
-	 */
-	public function AuthProvider () {
-		return THINK_SESSION;
 	}
 
 	/**

@@ -1,17 +1,15 @@
 <?php
 namespace Services\User;
 
+use Quark\IQuarkAuthorizableLiteService;
 use Quark\IQuarkGetService;
 use Quark\IQuarkPostService;
-use Quark\IQuarkSignedPostService;
 
-use Quark\Quark;
 use Quark\QuarkDTO;
 use Quark\QuarkSession;
 use Quark\QuarkView;
 
 use ViewModels\LayoutView;
-use ViewModels\CommonErrorView;
 use ViewModels\User\LoginView;
 
 /**
@@ -19,7 +17,16 @@ use ViewModels\User\LoginView;
  *
  * @package Services\User
  */
-class LoginService implements IQuarkGetService, IQuarkPostService {
+class LoginService implements IQuarkGetService, IQuarkPostService, IQuarkAuthorizableLiteService {
+	/**
+	 * @param QuarkDTO $request
+	 *
+	 * @return string
+	 */
+	public function AuthorizationProvider (QuarkDTO $request) {
+		return THINK_SESSION;
+	}
+
 	/**
 	 * @param QuarkDTO     $request
 	 * @param QuarkSession $session
@@ -37,9 +44,9 @@ class LoginService implements IQuarkGetService, IQuarkPostService {
 	 * @return mixed
 	 */
 	public function Post (QuarkDTO $request, QuarkSession $session) {
-		if (!QuarkSession::Get(THINK_SESSION)->Login($request))
+		if (!$session->Login($request))
 			return QuarkView::InLayout(new LoginView(), new LayoutView());
 
-		Quark::Redirect('/');
+		return QuarkDTO::ForRedirect('/');
 	}
 }
