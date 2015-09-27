@@ -42,7 +42,7 @@ class User implements IQuarkModel, IQuarkStrongModel, IQuarkModelWithDataProvide
 			'date' => date('Y-m-d H:i:s'),
 			'name' => '',
 			'nickname' => '',
-			'avatar' => new QuarkFile(Quark::Host() . '/storage/default.png'),
+			'avatar' => new QuarkFile(__DIR__ . '/../static/placeholder-avatar.png'),
 			'favourites' => new QuarkCollection(new Head()),
 			'heads' => new QuarkCollection(new HeadAccess()),
 			'facebook' => new SocialNetwork(THINK_FACEBOOK),

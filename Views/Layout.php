@@ -46,7 +46,7 @@
 	<?php
 	if ($this->Child() instanceof \ViewModels\IndexView)
 		echo '
-			<div class="title" style="text-shadow: none;">
+			<div class="title" style="text-shadow: none; margin-top: 200px;">
 				<span>Thinkscape</span>
 				<p>Get your thinks fly!</p>
 			</div>

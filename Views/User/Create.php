@@ -12,6 +12,5 @@ You only need:<br>
 	<input class="quark-input" name="name" placeholder="Write Your real name" /><br>
 	<input class="quark-input" name="nickname" placeholder="and choose a nickname" /><br>
 	<br>
-	<?php echo $this->Signature(); ?>
 	<button type="submit" class="quark-button block green">Create</button>
 </form>

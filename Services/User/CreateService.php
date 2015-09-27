@@ -14,6 +14,7 @@ use Quark\QuarkView;
 
 use Models\User;
 
+use ViewModels\AuthErrorView;
 use ViewModels\LayoutView;
 use ViewModels\User\CreateView;
 use ViewModels\CommonErrorView;
@@ -23,7 +24,7 @@ use ViewModels\CommonErrorView;
  *
  * @package Services\User
  */
-class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthorizableService, IQuarkSignedPostService {
+class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthorizableService {
 	/**
 	 * @param QuarkDTO $request
 	 *
@@ -40,7 +41,7 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 	 * @return bool|mixed
 	 */
 	public function AuthorizationCriteria (QuarkDTO $request, QuarkSession $session) {
-		return true;
+		return $session->User() == null;
 	}
 
 	/**
@@ -50,7 +51,7 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 	 * @return mixed
 	 */
 	public function AuthorizationFailed (QuarkDTO $request, $criteria) {
-		// TODO: Implement AuthorizationFailed() method.
+		return QuarkView::InLayout(new AuthErrorView(), new LayoutView());
 	}
 
 	/**
@@ -75,18 +76,9 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 		if (!$user->Create())
 			return QuarkView::InLayout(new CreateView(), new LayoutView());
 
-		if (!QuarkSession::Get(THINK_SESSION)->Login($request))
+		if (!$session->Login($request))
 			return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
 
-		Quark::Redirect('/');
-	}
-
-	/**
-	 * @param QuarkDTO $request
-	 *
-	 * @return mixed
-	 */
-	public function SignatureCheckFailedOnPost (QuarkDTO $request) {
-		return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
+		return QuarkDTO::ForRedirect('/');
 	}
 }

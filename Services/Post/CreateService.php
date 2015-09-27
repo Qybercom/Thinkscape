@@ -1,20 +1,19 @@
 <?php
 namespace Services\Post;
 
-use Models\Head;
-use Models\HeadAccess;
 use Quark\IQuarkAuthorizableService;
 use Quark\IQuarkGetService;
 use Quark\IQuarkPostService;
 use Quark\IQuarkSignedPostService;
 
-use Quark\Quark;
 use Quark\QuarkDTO;
 use Quark\QuarkModel;
 use Quark\QuarkSession;
 use Quark\QuarkView;
 
 use Models\Post;
+use Models\Head;
+use Models\HeadAccess;
 
 use ViewModels\AuthErrorView;
 use ViewModels\CommonErrorView;
@@ -66,10 +65,13 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 		$head = null;
 
 		if (isset($request->head)) {
+			/**
+			 * @var QuarkModel|Head $head
+			 */
 			$head = QuarkModel::FindOneById(new Head(), $request->head);
 
 			if ($head == null || !$head->Rights($session->User(), HeadAccess::RIGHT_WRITE))
-				return QuarkView::InLayout(new CommonErrorView(), new LayoutView());
+				return QuarkView::InLayout(new AuthErrorView(), new LayoutView());
 		}
 
 		return QuarkView::InLayout(new CreateView(), new LayoutView(), array(
@@ -90,6 +92,9 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 		$post->author = $user;
 
 		if (isset($request->head)) {
+			/**
+			 * @var QuarkModel|Head $head
+			 */
 			$head = QuarkModel::FindOneById(new Head(), $request->head);
 
 			$post->head = $head;
@@ -101,7 +106,7 @@ class CreateService implements IQuarkGetService, IQuarkPostService, IQuarkAuthor
 		if (!$post->Create())
 			return QuarkView::InLayout(new CreateView(), new LayoutView(), $post);
 
-		Quark::Redirect('/');
+		return QuarkDTO::ForRedirect('/');
 	}
 
 	/**
